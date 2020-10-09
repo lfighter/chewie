@@ -50,6 +50,7 @@ class PlayerWithControls extends StatelessWidget {
     BuildContext context,
     ChewieController chewieController,
   ) {
+    print(Theme.of(context).platform);
     return chewieController.showControls
         ? chewieController.customControls != null
             ? chewieController.customControls
