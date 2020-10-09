@@ -345,7 +345,7 @@ class ChewieController extends ChangeNotifier {
 
   Future<void> play() async {
     await videoPlayerController.play();
-    await audioPlayer?.resume()
+    await audioPlayer?.resume();
   }
 
   Future<void> setLooping(bool looping) async {
