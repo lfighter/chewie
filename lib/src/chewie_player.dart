@@ -202,7 +202,7 @@ class ChewieController extends ChangeNotifier {
   /// The controller for the video you want to play
   final VideoPlayerController videoPlayerController;
   final String audioPlayerUrl;
-  AudioPlayer audioPlayer;
+  AudioPlayer audioPlayer=null;
 
   /// Initialize the Video on Startup. This will prep the video for playback.
   final bool autoInitialize;
@@ -290,7 +290,7 @@ class ChewieController extends ChangeNotifier {
   Future _initialize() async {
     await videoPlayerController.setLooping(looping);
     if(audioPlayerUrl!=null)audioPlayer = AudioPlayer();
-    await audioPlayer.setUrl(audioPlayerUrl);
+    await audioPlayer?.setUrl(audioPlayerUrl);
     await audioPlayer?.setReleaseMode(looping?ReleaseMode.LOOP:ReleaseMode.STOP);
     if ((autoInitialize || autoPlay) &&
         !videoPlayerController.value.initialized) {
@@ -366,7 +366,7 @@ class ChewieController extends ChangeNotifier {
 
   Future<void> setVolume(double volume) async {
     await videoPlayerController.setVolume(volume);
-    await audioPlayer?.setVolume(volume);
+    //await audioPlayer?.setVolume(volume);
   }
 }
 
