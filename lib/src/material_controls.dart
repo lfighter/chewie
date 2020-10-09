@@ -214,10 +214,10 @@ class _MaterialControlsState extends State<MaterialControls> {
         _cancelAndRestartTimer();
 
         if (_latestValue.volume == 0) {
-          controller.setVolume(_latestVolume ?? 0.5);
+          chewieController.setVolume(_latestVolume ?? 0.5);
         } else {
           _latestVolume = controller.value.volume;
-          controller.setVolume(0.0);
+          chewieController.setVolume(0.0);
         }
       },
       child: AnimatedOpacity(
@@ -337,19 +337,19 @@ class _MaterialControlsState extends State<MaterialControls> {
       if (controller.value.isPlaying) {
         _hideStuff = false;
         _hideTimer?.cancel();
-        controller.pause();
+        chewieController.pause();
       } else {
         _cancelAndRestartTimer();
 
         if (!controller.value.initialized) {
           controller.initialize().then((_) {
-            controller.play();
+            chewieController.play();
           });
         } else {
           if (isFinished) {
-            controller.seekTo(Duration(seconds: 0));
+            chewieController.seekTo(Duration(seconds: 0));
           }
-          controller.play();
+          chewieController.play();
         }
       }
     });
