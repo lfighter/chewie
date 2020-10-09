@@ -196,13 +196,14 @@ class ChewieController extends ChangeNotifier {
     this.routePageBuilder = null,
   }) : assert(videoPlayerController != null,
             'You must provide a controller to play a video') {
+    if(audioPlayerUrl!=null)this.audioPlayer = AudioPlayer();
     _initialize();
   }
 
   /// The controller for the video you want to play
   final VideoPlayerController videoPlayerController;
   final String audioPlayerUrl;
-  AudioPlayer audioPlayer=null;
+  AudioPlayer audioPlayer;
 
   /// Initialize the Video on Startup. This will prep the video for playback.
   final bool autoInitialize;
@@ -288,8 +289,8 @@ class ChewieController extends ChangeNotifier {
   bool get isFullScreen => _isFullScreen;
 
   Future _initialize() async {
+    print('init');
     await videoPlayerController.setLooping(looping);
-    if(audioPlayerUrl!=null)audioPlayer = AudioPlayer();
     await audioPlayer?.setUrl(audioPlayerUrl);
     await audioPlayer?.setReleaseMode(looping?ReleaseMode.LOOP:ReleaseMode.STOP);
     if ((autoInitialize || autoPlay) &&
@@ -319,6 +320,7 @@ class ChewieController extends ChangeNotifier {
   void dispose() {
     super.dispose();
     audioPlayer.dispose();
+    print('dispose');
   }
 
   void _fullScreenListener() async {
@@ -344,28 +346,33 @@ class ChewieController extends ChangeNotifier {
   }
 
   Future<void> play() async {
-    await videoPlayerController.play();
+    //await videoPlayerController.play();
     await audioPlayer?.resume();
+    print('resume');
   }
 
   Future<void> setLooping(bool looping) async {
     await videoPlayerController.setLooping(looping);
     await audioPlayer?.setReleaseMode(looping?ReleaseMode.LOOP:ReleaseMode.STOP);
+    print('setlooping');
   }
 
   Future<void> pause() async {
     await videoPlayerController.pause();
     await audioPlayer?.pause();
+    print('pause');
   }
 
   Future<void> seekTo(Duration moment) async {
     await videoPlayerController.seekTo(moment);
     await audioPlayer?.seek(moment);
+    print('seekto');
   }
 
   Future<void> setVolume(double volume) async {
     await videoPlayerController.setVolume(volume);
     //await audioPlayer?.setVolume(volume);
+    print('setvol');
   }
 }
 
