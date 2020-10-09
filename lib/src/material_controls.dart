@@ -12,7 +12,6 @@ class MaterialControls extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    print('initcontrolls');
     return _MaterialControlsState();
   }
 }
@@ -324,7 +323,6 @@ class _MaterialControlsState extends State<MaterialControls> {
   }
 
   void _playPause() {
-    print('pressed playpause');
     bool isFinished;
     if( _latestValue.duration != null)
     {
