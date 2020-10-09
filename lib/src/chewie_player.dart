@@ -346,9 +346,10 @@ class ChewieController extends ChangeNotifier {
   }
 
   Future<void> play() async {
-    await videoPlayerController.play();
-    await audioPlayer?.resume();
+    var temp = videoPlayerController.play();
+    var temp2 = audioPlayer?.resume();
     print('resume');
+    await temp & await temp2;
   }
 
   Future<void> setLooping(bool looping) async {
@@ -358,16 +359,18 @@ class ChewieController extends ChangeNotifier {
   }
 
   Future<void> pause() async {
-    await videoPlayerController.pause();
-    await audioPlayer?.pause();
+    var temp = videoPlayerController.pause();
+    var temp2 = audioPlayer?.pause();
     print('pause');
+    await temp & await temp2;
   }
 
   Future<void> seekTo(Duration moment) async {
     await pause();
-    await videoPlayerController.seekTo(moment);
-    await audioPlayer?.seek(moment);
+    var temp =  videoPlayerController.seekTo(moment);
+    var temp2 =  audioPlayer?.seek(moment);
     print('seekto');
+    await temp & await temp2;
     await play();
   }
 
