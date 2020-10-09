@@ -364,9 +364,11 @@ class ChewieController extends ChangeNotifier {
   }
 
   Future<void> seekTo(Duration moment) async {
+    await pause();
     await videoPlayerController.seekTo(moment);
     await audioPlayer?.seek(moment);
     print('seekto');
+    await play();
   }
 
   Future<void> setVolume(double volume) async {
