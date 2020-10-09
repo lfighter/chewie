@@ -345,8 +345,7 @@ class ChewieController extends ChangeNotifier {
 
   Future<void> play() async {
     await videoPlayerController.play();
-    print(await audioPlayer?.resume());
-    print('hihihihihihhihihihihihihihhhhhhhhhhhhhhhhhhhhhhhhhihihihihhihihhihihihihihihihihihhihihihihihihihihhihihihihihihhihihihihihihihihhihihihihihihihihhihihihihhiihihihihhihihihhihihhihihihhihihhihihihhihihihhihhi');
+    await audioPlayer?.resume()
   }
 
   Future<void> setLooping(bool looping) async {
@@ -366,7 +365,7 @@ class ChewieController extends ChangeNotifier {
 
   Future<void> setVolume(double volume) async {
     await videoPlayerController.setVolume(volume);
-    //await audioPlayer?.setVolume(volume);
+    await audioPlayer?.setVolume(volume);
   }
 }
 
