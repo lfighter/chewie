@@ -365,7 +365,7 @@ class ChewieController extends ChangeNotifier {
 
   Future<void> setVolume(double volume) async {
     await videoPlayerController.setVolume(volume);
-    await audioPlayer?.setVolume(volume);
+    //await audioPlayer?.setVolume(volume);
   }
 }
 
