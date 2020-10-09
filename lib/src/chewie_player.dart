@@ -167,7 +167,7 @@ class ChewieState extends State<Chewie> {
 class ChewieController extends ChangeNotifier {
   ChewieController({
     this.videoPlayerController,
-    this.audioPlayer=null,
+    this.audioPlayerUrl=null,
     this.aspectRatio,
     this.autoInitialize = false,
     this.autoPlay = false,
@@ -201,7 +201,8 @@ class ChewieController extends ChangeNotifier {
 
   /// The controller for the video you want to play
   final VideoPlayerController videoPlayerController;
-  final AudioPlayer audioPlayer;
+  final String audioPlayerUrl;
+  final AudioPlayer audioPlayerUrl;
 
   /// Initialize the Video on Startup. This will prep the video for playback.
   final bool autoInitialize;
@@ -288,6 +289,8 @@ class ChewieController extends ChangeNotifier {
 
   Future _initialize() async {
     await videoPlayerController.setLooping(looping);
+    if(audioPlayerUrl!=null)audioPlayer = AudioPlayer();
+    await audioPlayer.setUrl(audioPlayerUrl);
     await audioPlayer?.setReleaseMode(looping?ReleaseMode.LOOP:ReleaseMode.STOP);
     if ((autoInitialize || autoPlay) &&
         !videoPlayerController.value.initialized) {
@@ -310,6 +313,12 @@ class ChewieController extends ChangeNotifier {
     if (fullScreenByDefault) {
       videoPlayerController.addListener(_fullScreenListener);
     }
+  }
+  
+  @override
+  void dispose() {
+    super.dispose();
+    audioPlayer.dispose();
   }
 
   void _fullScreenListener() async {
