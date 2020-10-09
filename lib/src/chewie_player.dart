@@ -202,7 +202,7 @@ class ChewieController extends ChangeNotifier {
   /// The controller for the video you want to play
   final VideoPlayerController videoPlayerController;
   final String audioPlayerUrl;
-  final AudioPlayer audioPlayerUrl;
+  AudioPlayer audioPlayerUrl;
 
   /// Initialize the Video on Startup. This will prep the video for playback.
   final bool autoInitialize;
