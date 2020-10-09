@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 typedef Widget ChewieRoutePageBuilder(
     BuildContext context,
@@ -166,6 +167,7 @@ class ChewieState extends State<Chewie> {
 class ChewieController extends ChangeNotifier {
   ChewieController({
     this.videoPlayerController,
+    this.audioPlayer=null,
     this.aspectRatio,
     this.autoInitialize = false,
     this.autoPlay = false,
@@ -199,6 +201,7 @@ class ChewieController extends ChangeNotifier {
 
   /// The controller for the video you want to play
   final VideoPlayerController videoPlayerController;
+  final AudioPlayer audioPlayer;
 
   /// Initialize the Video on Startup. This will prep the video for playback.
   final bool autoInitialize;
@@ -283,26 +286,25 @@ class ChewieController extends ChangeNotifier {
 
   bool get isFullScreen => _isFullScreen;
 
-  bool get isPlaying => videoPlayerController.value.isPlaying;
-
   Future _initialize() async {
     await videoPlayerController.setLooping(looping);
-
+    await audioPlayer?.setReleaseMode(looping?ReleaseMode.LOOP:ReleaseMode.STOP);
     if ((autoInitialize || autoPlay) &&
         !videoPlayerController.value.initialized) {
       await videoPlayerController.initialize();
     }
-
     if (autoPlay) {
       if (fullScreenByDefault) {
         enterFullScreen();
       }
 
       await videoPlayerController.play();
+      await audioPlayer?.resume();
     }
 
     if (startAt != null) {
       await videoPlayerController.seekTo(startAt);
+      await audioPlayer?.seek(startAt);
     }
 
     if (fullScreenByDefault) {
@@ -332,28 +334,30 @@ class ChewieController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void togglePause() {
-    isPlaying ? pause() : play();
-  }
-
   Future<void> play() async {
     await videoPlayerController.play();
+    print(await audioPlayer?.resume());
+    print('hihihihihihhihihihihihihihhhhhhhhhhhhhhhhhhhhhhhhhihihihihhihihhihihihihihihihihihhihihihihihihihihhihihihihihihhihihihihihihihihhihihihihihihihihhihihihihhiihihihihhihihihhihihhihihihhihihhihihihhihihihhihhi');
   }
 
   Future<void> setLooping(bool looping) async {
     await videoPlayerController.setLooping(looping);
+    await audioPlayer?.setReleaseMode(looping?ReleaseMode.LOOP:ReleaseMode.STOP);
   }
 
   Future<void> pause() async {
     await videoPlayerController.pause();
+    await audioPlayer?.pause();
   }
 
   Future<void> seekTo(Duration moment) async {
     await videoPlayerController.seekTo(moment);
+    await audioPlayer?.seek(moment);
   }
 
   Future<void> setVolume(double volume) async {
     await videoPlayerController.setVolume(volume);
+    await audioPlayer?.setVolume(volume);
   }
 }
 
