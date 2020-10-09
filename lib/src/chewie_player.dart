@@ -346,7 +346,7 @@ class ChewieController extends ChangeNotifier {
   }
 
   Future<void> play() async {
-    //await videoPlayerController.play();
+    await videoPlayerController.play();
     await audioPlayer?.resume();
     print('resume');
   }
@@ -371,7 +371,7 @@ class ChewieController extends ChangeNotifier {
 
   Future<void> setVolume(double volume) async {
     await videoPlayerController.setVolume(volume);
-    //await audioPlayer?.setVolume(volume);
+    await audioPlayer?.setVolume(volume);
     print('setvol');
   }
 }
