@@ -33,6 +33,7 @@ class _VideoProgressBarState extends State<MaterialVideoProgressBar> {
 
   VoidCallback listener;
   bool _controllerWasPlaying = false;
+  ChewieController chewieController;
 
   VideoPlayerController get controller => widget.controller;
 
@@ -40,6 +41,7 @@ class _VideoProgressBarState extends State<MaterialVideoProgressBar> {
   void initState() {
     super.initState();
     controller.addListener(listener);
+    chewieController = ChewieController.of(context);
   }
 
   @override
@@ -55,7 +57,8 @@ class _VideoProgressBarState extends State<MaterialVideoProgressBar> {
       final Offset tapPos = box.globalToLocal(globalPosition);
       final double relative = tapPos.dx / box.size.width;
       final Duration position = controller.value.duration * relative;
-      controller.seekTo(position);
+      //controller
+      chewieController.seekTo(position);
     }
 
     return GestureDetector(
@@ -78,7 +81,8 @@ class _VideoProgressBarState extends State<MaterialVideoProgressBar> {
         }
         _controllerWasPlaying = controller.value.isPlaying;
         if (_controllerWasPlaying) {
-          controller.pause();
+          //controller
+          chewieController.pause();
         }
 
         if (widget.onDragStart != null) {
@@ -97,7 +101,8 @@ class _VideoProgressBarState extends State<MaterialVideoProgressBar> {
       },
       onHorizontalDragEnd: (DragEndDetails details) {
         if (_controllerWasPlaying) {
-          controller.play();
+          //controller
+          chewieController.play();
         }
 
         if (widget.onDragEnd != null) {
