@@ -33,6 +33,7 @@ class _VideoProgressBarState extends State<CupertinoVideoProgressBar> {
 
   VoidCallback listener;
   bool _controllerWasPlaying = false;
+  ChewieController chewieController;
 
   VideoPlayerController get controller => widget.controller;
 
@@ -40,6 +41,7 @@ class _VideoProgressBarState extends State<CupertinoVideoProgressBar> {
   void initState() {
     super.initState();
     controller.addListener(listener);
+    chewieController = ChewieController.of(context);
   }
 
   @override
@@ -55,7 +57,7 @@ class _VideoProgressBarState extends State<CupertinoVideoProgressBar> {
       final Offset tapPos = box.globalToLocal(globalPosition);
       final double relative = tapPos.dx / box.size.width;
       final Duration position = controller.value.duration * relative;
-      controller.seekTo(position);
+      chewieController.seekTo(position);
     }
 
     return GestureDetector(
@@ -78,7 +80,7 @@ class _VideoProgressBarState extends State<CupertinoVideoProgressBar> {
         }
         _controllerWasPlaying = controller.value.isPlaying;
         if (_controllerWasPlaying) {
-          controller.pause();
+          chewieController.pause();
         }
 
         if (widget.onDragStart != null) {
@@ -97,7 +99,7 @@ class _VideoProgressBarState extends State<CupertinoVideoProgressBar> {
       },
       onHorizontalDragEnd: (DragEndDetails details) {
         if (_controllerWasPlaying) {
-          controller.play();
+          chewieController.play();
         }
 
         if (widget.onDragEnd != null) {
