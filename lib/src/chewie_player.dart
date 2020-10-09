@@ -372,7 +372,6 @@ class ChewieController extends ChangeNotifier {
     print('seekto');
     await temp;
     await temp2;
-    await play();
   }
 
   Future<void> setVolume(double volume) async {
